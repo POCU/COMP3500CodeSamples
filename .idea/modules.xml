@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/01/w01.iml" filepath="$PROJECT_DIR$/01/w01.iml" />
+      <module fileurl="file://$PROJECT_DIR$/02/w02.iml" filepath="$PROJECT_DIR$/02/w02.iml" />
+      <module fileurl="file://$PROJECT_DIR$/03/w03.iml" filepath="$PROJECT_DIR$/03/w03.iml" />
+      <module fileurl="file://$PROJECT_DIR$/04/w04.iml" filepath="$PROJECT_DIR$/04/w04.iml" />
+      <module fileurl="file://$PROJECT_DIR$/05/w05.iml" filepath="$PROJECT_DIR$/05/w05.iml" />
+      <module fileurl="file://$PROJECT_DIR$/06/w06.iml" filepath="$PROJECT_DIR$/06/w06.iml" />
+      <module fileurl="file://$PROJECT_DIR$/07/w07.iml" filepath="$PROJECT_DIR$/07/w07.iml" />
+      <module fileurl="file://$PROJECT_DIR$/09/w09.iml" filepath="$PROJECT_DIR$/09/w09.iml" />
+      <module fileurl="file://$PROJECT_DIR$/10/w10.iml" filepath="$PROJECT_DIR$/10/w10.iml" />
+      <module fileurl="file://$PROJECT_DIR$/11/w11.iml" filepath="$PROJECT_DIR$/11/w11.iml" />
+      <module fileurl="file://$PROJECT_DIR$/12/w12.iml" filepath="$PROJECT_DIR$/12/w12.iml" />
+      <module fileurl="file://$PROJECT_DIR$/13/w13.iml" filepath="$PROJECT_DIR$/13/w13.iml" />
+      <module fileurl="file://$PROJECT_DIR$/14/w14.iml" filepath="$PROJECT_DIR$/14/w14.iml" />
+    </modules>
+  </component>
+</project>
