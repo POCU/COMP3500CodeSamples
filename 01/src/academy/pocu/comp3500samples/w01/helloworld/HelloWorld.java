@@ -1,4 +1,4 @@
-package academy.pocu.comp3500samples.w01;
+package academy.pocu.comp3500samples.w01.helloworld;
 
 public class HelloWorld {
     public static void main(String[] args) {
