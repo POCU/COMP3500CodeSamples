@@ -24,8 +24,6 @@ public class Program {
             return n;
         }
 
-        int temp = sumRecursive(n - 1);
-
-        return n + temp;
+        return n + sumRecursive(n - 1);
     }
 }
