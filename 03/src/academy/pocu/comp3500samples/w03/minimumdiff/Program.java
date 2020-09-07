@@ -1,4 +1,4 @@
-package academy.pocu.comp3500samples.w03.smallestdiff;
+package academy.pocu.comp3500samples.w03.minimumdiff;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -32,6 +32,7 @@ public class Program {
             }
         }
 
+        System.out.println(String.format("minimum difference: %d", minDiff));
         System.out.println(String.format("num1: %d, num2: %d", num1, num2));
     }
 
