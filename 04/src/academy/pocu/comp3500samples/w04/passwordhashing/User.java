@@ -46,19 +46,29 @@ public final class User {
         byte[] salt = new byte[SALT_LENGTH_IN_BYTES];
         random.nextBytes(salt);
 
-        String passwordWithPepper = password + AppSettings.PEPPER;
-
-        KeySpec spec = new PBEKeySpec(passwordWithPepper.toCharArray(), salt, NUM_ITERATIONS, OUTPUT_KEY_LENGTH_IN_BYTES * 8);
         try {
+            KeySpec spec = new PBEKeySpec(password.toCharArray(),
+                    salt,
+                    NUM_ITERATIONS,
+                    OUTPUT_KEY_LENGTH_IN_BYTES * 8);
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+
             byte[] hash = factory.generateSecret(spec).getEncoded();
 
             byte[] outputBytes = new byte[SALT_LENGTH_IN_BYTES + OUTPUT_KEY_LENGTH_IN_BYTES];
 
-            System.arraycopy(salt, 0, outputBytes, 0, SALT_LENGTH_IN_BYTES);
-            System.arraycopy(hash, 0, outputBytes, SALT_LENGTH_IN_BYTES, OUTPUT_KEY_LENGTH_IN_BYTES);
+            System.arraycopy(salt,
+                    0,
+                    outputBytes,
+                    0,
+                    SALT_LENGTH_IN_BYTES);
+            System.arraycopy(hash, 0,
+                    outputBytes,
+                    SALT_LENGTH_IN_BYTES,
+                    OUTPUT_KEY_LENGTH_IN_BYTES);
 
-            this.paswordHash = Base64.getEncoder().encodeToString(outputBytes);
+            this.paswordHash = Base64.getEncoder()
+                    .encodeToString(outputBytes);
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         } catch (InvalidKeySpecException e) {
@@ -71,16 +81,25 @@ public final class User {
         byte[] salt = new byte[SALT_LENGTH_IN_BYTES];
         byte[] expectedHash = new byte[OUTPUT_KEY_LENGTH_IN_BYTES];
 
-        System.arraycopy(outputBytes, 0, salt, 0, SALT_LENGTH_IN_BYTES);
-        System.arraycopy(outputBytes, SALT_LENGTH_IN_BYTES, expectedHash, 0, OUTPUT_KEY_LENGTH_IN_BYTES);
-
-        String passwordWithPepper = password + AppSettings.PEPPER;
-
-        KeySpec spec = new PBEKeySpec(passwordWithPepper.toCharArray(), salt, NUM_ITERATIONS, OUTPUT_KEY_LENGTH_IN_BYTES * 8);
+        System.arraycopy(outputBytes,
+                0,
+                salt,
+                0,
+                SALT_LENGTH_IN_BYTES);
+        System.arraycopy(outputBytes,
+                SALT_LENGTH_IN_BYTES,
+                expectedHash,
+                0,
+                OUTPUT_KEY_LENGTH_IN_BYTES);
 
         try {
+            KeySpec spec = new PBEKeySpec(password.toCharArray(),
+                    salt,
+                    NUM_ITERATIONS,
+                    OUTPUT_KEY_LENGTH_IN_BYTES * 8);
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-            byte[] actualHash = factory.generateSecret(spec).getEncoded();
+            byte[] actualHash = factory.generateSecret(spec)
+                    .getEncoded();
 
             return Arrays.equals(expectedHash, actualHash);
         } catch (NoSuchAlgorithmException e) {
