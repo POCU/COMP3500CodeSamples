@@ -7,6 +7,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
@@ -69,8 +70,8 @@ public class Program {
         assert (key.length() == 16 || key.length() == 24 || key.length() == 32);
 
         try {
-            byte[] keyInBytes = key.getBytes("UTF-8");
-            byte[] messageInBytes = message.getBytes("UTF-8");
+            byte[] keyInBytes = key.getBytes(StandardCharsets.UTF_8);
+            byte[] messageInBytes = message.getBytes(StandardCharsets.UTF_8);
 
             SecretKeySpec secretKey = new SecretKeySpec(keyInBytes, "AES");
 
@@ -79,9 +80,7 @@ public class Program {
 
             byte[] encrypted = cipher.doFinal(messageInBytes);
 
-            String encryptedMessage = Base64.getEncoder().encodeToString(encrypted);
-
-            return encryptedMessage;
+            return Base64.getEncoder().encodeToString(encrypted);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -92,7 +91,7 @@ public class Program {
         assert (key.length() == 16 || key.length() == 24 || key.length() == 32);
 
         try {
-            byte[] keyInBytes = key.getBytes("UTF-8");
+            byte[] keyInBytes = key.getBytes(StandardCharsets.UTF_8);
             byte[] encrypted = Base64.getDecoder().decode(encryptedMessage);
 
             SecretKeySpec secretKey = new SecretKeySpec(keyInBytes, "AES");
@@ -102,9 +101,7 @@ public class Program {
 
             byte[] messageInBytes = cipher.doFinal(encrypted);
 
-            String message = new String(messageInBytes);
-
-            return message;
+            return new String(messageInBytes);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
