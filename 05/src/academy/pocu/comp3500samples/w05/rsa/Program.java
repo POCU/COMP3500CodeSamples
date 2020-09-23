@@ -20,19 +20,19 @@ public class Program {
         System.out.println(publicKey.toString());
         System.out.println(privateKey.toString());
 
-        String message = "My love letter";
+        String plaintext = "My love letter";
 
-        String encryptedMessage = encrypt(message, publicKey);
+        String ciphertext = encrypt(plaintext, publicKey);
 
-        System.out.println(encryptedMessage);
+        System.out.println(ciphertext);
 
-        String decryptedMessage = decrypt(encryptedMessage, privateKey);
+        String actualPlaintext = decrypt(ciphertext, privateKey);
 
-        System.out.println(decryptedMessage);
+        System.out.println(actualPlaintext);
 
-        decryptedMessage = decryptWithPublicKey(encryptedMessage, publicKey);
+        actualPlaintext = decryptWithPublicKey(ciphertext, publicKey);
 
-        System.out.println(decryptedMessage);
+        System.out.println(actualPlaintext);
     }
 
     private static KeyPair getKeyPair() {
@@ -49,28 +49,34 @@ public class Program {
         }
     }
 
-    private static String encrypt(String message, PublicKey publicKey) {
+    private static String encrypt(String plaintext, PublicKey publicKey) {
         try {
             Cipher cipher = Cipher.getInstance("RSA");
             cipher.init(Cipher.ENCRYPT_MODE, publicKey);
 
-            byte[] encryptedMessage = cipher.doFinal(message.getBytes(StandardCharsets.UTF_8));
+            byte[] bytes = plaintext.getBytes(StandardCharsets.UTF_8);
 
-            return Base64.getEncoder().encodeToString(encryptedMessage);
+            byte[] ciphertext = cipher.doFinal(bytes);
+
+            return Base64.getEncoder()
+                    .encodeToString(ciphertext);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
 
-    private static String decrypt(String encryptedMessage, PrivateKey privateKey) {
+    private static String decrypt(String ciphertext, PrivateKey privateKey) {
         try {
-            byte[] bytes = Base64.getDecoder().decode(encryptedMessage);
+            byte[] bytes = Base64.getDecoder()
+                    .decode(ciphertext);
 
             Cipher cipher = Cipher.getInstance("RSA");
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
 
-            return new String(cipher.doFinal(bytes), StandardCharsets.UTF_8);
+            byte[] plaintext = cipher.doFinal(bytes);
+
+            return new String(plaintext, StandardCharsets.UTF_8);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -84,7 +90,9 @@ public class Program {
             Cipher cipher = Cipher.getInstance("RSA");
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
 
-            return new String(cipher.doFinal(bytes), StandardCharsets.UTF_8);
+            byte[] plaintext = cipher.doFinal(bytes);
+
+            return new String(plaintext, StandardCharsets.UTF_8);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
