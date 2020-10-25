@@ -77,28 +77,28 @@ public final class User {
     }
 
     public boolean isValidPassword(String password) {
-        byte[] outputBytes = Base64.getDecoder().decode(this.paswordHash);
+        byte[] outputBytes = Base64.getDecoder()
+                .decode(this.paswordHash);
+
         byte[] salt = new byte[SALT_LENGTH_IN_BYTES];
         byte[] expectedHash = new byte[OUTPUT_KEY_LENGTH_IN_BYTES];
 
         System.arraycopy(outputBytes,
-                0,
-                salt,
-                0,
-                SALT_LENGTH_IN_BYTES);
+                0, salt,
+                0, SALT_LENGTH_IN_BYTES);
         System.arraycopy(outputBytes,
-                SALT_LENGTH_IN_BYTES,
-                expectedHash,
-                0,
-                OUTPUT_KEY_LENGTH_IN_BYTES);
+                SALT_LENGTH_IN_BYTES, expectedHash,
+                0, OUTPUT_KEY_LENGTH_IN_BYTES);
 
         try {
             KeySpec spec = new PBEKeySpec(password.toCharArray(),
-                    salt,
-                    NUM_ITERATIONS,
+                    salt, NUM_ITERATIONS,
                     OUTPUT_KEY_LENGTH_IN_BYTES * 8);
+
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-            byte[] actualHash = factory.generateSecret(spec)
+
+            byte[] actualHash = factory
+                    .generateSecret(spec)
                     .getEncoded();
 
             return Arrays.equals(expectedHash, actualHash);
