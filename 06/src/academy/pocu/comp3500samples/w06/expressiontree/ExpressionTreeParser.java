@@ -7,7 +7,6 @@ public final class ExpressionTreeParser {
     }
 
     public static Node buildExpressionTree(String s) {
-        // Stack to hold nodes
         Stack<Node> nodeStack = new Stack<>();
         Stack<String> operatorStack = new Stack<>();
 
@@ -23,57 +22,51 @@ public final class ExpressionTreeParser {
             } else if (Character.isDigit(c)) {
                 StringBuilder sb = new StringBuilder();
 
-                while (i < s.length() && Character.isDigit(s.charAt(i))) {
-                    sb.append(s.charAt(i++));
+                int j = i;
+
+                while (j < s.length() && Character.isDigit(s.charAt(j))) {
+                    sb.append(s.charAt(j++));
                 }
 
                 Node node = new Node(sb.toString());
                 nodeStack.add(node);
+                i = j - 1;
             } else if (isOperator(c)) {
-
-                // If an operator with lower or
-                // same associativity appears
                 while (!operatorStack.isEmpty()
-                        && operatorStack.peek() != "("
+                        && !operatorStack.peek().equals("(")
+                        && c != '('
                         && getOperatorPriority(operatorStack.peek()) >= getOperatorPriority(Character.toString(c))) {
-
-                    // Get and remove the top element
-                    // from the character stack
-                    Node node = new Node(operatorStack.pop());
-
-                    // Get and remove the top element
-                    // from the node stack
-                    Node right = nodeStack.pop();
-
-                    // Get and remove the currently top
-                    // element from the node stack
-                    Node left = nodeStack.pop();
-
-                    // Update the tree
-                    node.setRight(right);
-                    node.setLeft(left);
-
-                    // Push the node to the node stack
-                    nodeStack.add(node);
+                    addNewNodeToNodeStack(nodeStack, operatorStack);
                 }
 
-                // Push s[i] to char stack
                 operatorStack.push(Character.toString(c));
             } else if (c == ')') {
-                while (!operatorStack.isEmpty() && operatorStack.peek() != "(") {
-                    Node node = new Node(operatorStack.pop());
-                    Node right = nodeStack.pop();
-                    Node left = nodeStack.pop();
-                    node.setLeft(left);
-                    node.setRight(right);
-                    nodeStack.add(node);
+                while (!operatorStack.isEmpty() && !operatorStack.peek().equals("(")) {
+                    addNewNodeToNodeStack(nodeStack, operatorStack);
                 }
 
                 operatorStack.pop();
             }
         }
 
+        assert operatorStack.size() == 1;
+        assert nodeStack.size() == 2;
+
+        addNewNodeToNodeStack(nodeStack, operatorStack);
+
         return nodeStack.pop();
+    }
+
+    private static void addNewNodeToNodeStack(Stack<Node> nodeStack, Stack<String> operatorStack) {
+        Node node = new Node(operatorStack.pop());
+
+        Node right = nodeStack.pop();
+        Node left = nodeStack.pop();
+
+        node.setRight(right);
+        node.setLeft(left);
+
+        nodeStack.add(node);
     }
 
     private static boolean isOperator(final char c) {
@@ -95,7 +88,7 @@ public final class ExpressionTreeParser {
                 return 1;
 
             default:
-                throw new IndexOutOfBoundsException(String.format("Unknown operator: %c", operator));
+                throw new IndexOutOfBoundsException(String.format("Unknown operator: %s", operator));
         }
     }
 }

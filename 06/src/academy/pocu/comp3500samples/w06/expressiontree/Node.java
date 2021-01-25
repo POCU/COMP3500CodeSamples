@@ -1,16 +1,16 @@
 package academy.pocu.comp3500samples.w06.expressiontree;
 
 public class Node {
-    private String operand;
+    private String data;
     private Node left;
     private Node right;
 
-    public Node(final String operand) {
-        this.operand = operand;
+    public Node(final String data) {
+        this.data = data;
     }
 
-    public String getOperand() {
-        return this.operand;
+    public String getData() {
+        return this.data;
     }
 
     public Node getLeft() {
@@ -32,14 +32,14 @@ public class Node {
     public static void traverseInOrderRecursive(final Node node) {
         if (node != null) {
             traverseInOrderRecursive(node.left);
-            System.out.print(node.operand);
+            System.out.print(node.data);
             traverseInOrderRecursive(node.right);
         }
     }
 
     public static void traversePreOrderRecursive(final Node node) {
         if (node != null) {
-            System.out.print(node.operand);
+            System.out.print(node.data);
             traversePreOrderRecursive(node.left);
             traversePreOrderRecursive(node.right);
         }
