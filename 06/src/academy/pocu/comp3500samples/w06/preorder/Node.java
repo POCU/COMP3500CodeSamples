@@ -3,7 +3,7 @@ package academy.pocu.comp3500samples.w06.preorder;
 import java.util.Stack;
 
 public class Node {
-    private int data;
+    private final int data;
     private Node left;
     private Node right;
 
