@@ -13,30 +13,53 @@ public class Program {
         Node.insertRecursive(root, 52);
         Node.insertRecursive(root, 57);
 
-        System.out.println(root.getData());
+        int num = root.getData();
+        System.out.println(num);
 
-        System.out.print(root.getLeft().getData());
+        num = root.getLeft().getData();
+        System.out.print(num);
+
         System.out.print(" ");
-        System.out.print(root.getRight().getData());
+
+        num = root.getRight().getData();
+        System.out.print(num);
 
         System.out.println();
 
-        System.out.print(root.getLeft().getLeft().getData());
+        num = root.getLeft().getLeft()
+                .getData();
+        System.out.print(num);
+
         System.out.print(" ");
-        System.out.print(root.getLeft().getRight().getData());
+
+        num = root.getLeft().getRight()
+                .getData();
+        System.out.print(num);
+
         System.out.print(" ");
-        System.out.print(root.getRight().getLeft().getData());
+
+        num = root.getRight().getLeft()
+                .getData();
+        System.out.print(num);
+
         System.out.print(" ");
-        System.out.print(root.getRight().getRight().getData());
+
+        num = root.getRight().getRight()
+                .getData();
+        System.out.print(num);
 
         System.out.println();
 
-        System.out.print(root.getLeft().getRight().getLeft().getData());
+        num = root.getLeft().getRight()
+                .getLeft().getData();
+        System.out.print(num);
 
         System.out.println();
 
         Node.insertRecursive(root, 53);
 
-        System.out.print(root.getRight().getLeft().getRight().getData());
+        num = root.getRight().getLeft()
+                .getRight().getData();
+        System.out.print(num);
     }
 }

@@ -15,29 +15,31 @@ public class Program {
 
         Node.traverseInOrderRecursive(root);
 
-        System.out.println("----------------------------------");
+        System.out.println("--------------------------");
 
-        Node copyRoot = Node.copyTree(root);
+        Node rootCopy = Node.copyRecursive(root);
 
-        Node.traverseInOrderRecursive(copyRoot);
+        Node.traverseInOrderRecursive(rootCopy);
 
-        System.out.println("----------------------------------");
+        System.out.println("--------------------------");
 
         root.getLeft().setData(100);
         Node.traverseInOrderRecursive(root);
 
-        System.out.println("----------------------------------");
+        System.out.println("--------------------------");
 
-        Node.traverseInOrderRecursive(copyRoot);
+        Node.traverseInOrderRecursive(rootCopy);
 
-        System.out.println("----------------------------------");
+        root.getLeft().setData(24);
+
+        System.out.println("--------------------------");
 
         Node.insertRecursive(root, 15);
 
         Node.traverseInOrderRecursive(root);
 
-        System.out.println("----------------------------------");
+        System.out.println("--------------------------");
 
-        Node.traverseInOrderRecursive(copyRoot);
+        Node.traverseInOrderRecursive(rootCopy);
     }
 }

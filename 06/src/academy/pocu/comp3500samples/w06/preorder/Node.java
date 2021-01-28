@@ -23,14 +23,6 @@ public class Node {
         return this.right;
     }
 
-    public void setLeft(final Node node) {
-        this.left = node;
-    }
-
-    public void setRight(final Node node) {
-        this.right = node;
-    }
-
     public static Node insertRecursive(final Node root, int data) {
         if (root == null) {
             return new Node(data);
@@ -46,11 +38,13 @@ public class Node {
     }
 
     public static void traversePreOrderRecursive(final Node node) {
-        if (node != null) {
-            System.out.println(node.data);
-            traversePreOrderRecursive(node.left);
-            traversePreOrderRecursive(node.right);
+        if (node == null) {
+            return;
         }
+
+        System.out.println(node.data);
+        traversePreOrderRecursive(node.left);
+        traversePreOrderRecursive(node.right);
     }
 
     public static void traversePreOrder(final Node root) {

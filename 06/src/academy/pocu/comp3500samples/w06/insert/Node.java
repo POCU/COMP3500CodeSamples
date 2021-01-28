@@ -21,25 +21,19 @@ public class Node {
         return this.right;
     }
 
-    public void setLeft(final Node node) {
-        this.left = node;
-    }
-
-    public void setRight(final Node node) {
-        this.right = node;
-    }
-
-    public static Node insertRecursive(final Node root, int data) {
-        if (root == null) {
+    public static Node insertRecursive(final Node node, int data) {
+        if (node == null) {
             return new Node(data);
         }
 
-        if (data < root.data) {
-            root.left = insertRecursive(root.left, data);
+        if (data < node.data) {
+            node.left = insertRecursive(node.left,
+                    data);
         } else {
-            root.right = insertRecursive(root.right, data);
+            node.right = insertRecursive(node.right,
+                    data);
         }
 
-        return root;
+        return node;
     }
 }
