@@ -30,8 +30,7 @@ public class Node {
             node.left = insertRecursive(node.left,
                     data);
         } else {
-            node.right = insertRecursive(node.right,
-                    data);
+            node.right = insertRecursive(node.right, data);
         }
 
         return node;
