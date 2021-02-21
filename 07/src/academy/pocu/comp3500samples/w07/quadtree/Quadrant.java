@@ -1,4 +1,4 @@
-package academy.pocu.comp2500samples.w07.quadtree;
+package academy.pocu.comp3500samples.w07.quadtree;
 
 import java.util.ArrayList;
 
@@ -37,23 +37,14 @@ public final class Quadrant {
             createQuadrants();
         }
 
-        if (this.topLeftQuadrant.insert(gameObject)) {
-            return true;
-        }
-
-        if (this.topRightQuadrant.insert(gameObject)) {
-            return true;
-        }
-
-        if (this.bottomLeftQuadrant.insert(gameObject)) {
-            return true;
-        }
-
-        if (this.bottomRightQuadrant.insert(gameObject)) {
-            return true;
-        }
-
-        return false;
+        return this.topLeftQuadrant
+                    .insert(gameObject)
+                || this.topRightQuadrant
+                    .insert(gameObject)
+                || this.bottomLeftQuadrant
+                    .insert(gameObject)
+                || this.bottomRightQuadrant
+                    .insert(gameObject);
     }
 
     public ArrayList<GameObject> getGameObjects(final BoundingBox box) {

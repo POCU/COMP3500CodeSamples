@@ -1,4 +1,4 @@
-package academy.pocu.comp2500samples.w07.quadtree;
+package academy.pocu.comp3500samples.w07.quadtree;
 
 import java.util.ArrayList;
 
