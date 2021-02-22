@@ -5,6 +5,9 @@ public final class Point {
     private int y;
 
     public Point(final int x, final int y) {
+        assert (x >= 0);
+        assert (y >= 0);
+
         this.x = x;
         this.y = y;
     }

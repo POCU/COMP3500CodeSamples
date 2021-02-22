@@ -1,12 +1,16 @@
 package academy.pocu.comp3500samples.w07.quadtree;
 
 public final class BoundingBox {
-    private Point topLeft;
-    private Point bottomRight;
+    private final Point topLeft;
+    private final Point bottomRight;
 
-    public BoundingBox(final Point topLeft, final Point topRight) {
+    public BoundingBox(final Point topLeft, final int width, final int height) {
+        assert (width >= 0);
+        assert (height >= 0);
+
         this.topLeft = topLeft;
-        this.bottomRight = topRight;
+        this.bottomRight = new Point(topLeft.getX() + width,
+                topLeft.getY() + height);
     }
 
     public Point getTopLeft() {

@@ -90,22 +90,30 @@ public final class Quadrant {
 
         Point p1 = new Point(topLeft);
         Point p2 = new Point(midX, midY);
-        BoundingBox box = new BoundingBox(p1, p2);
+        BoundingBox box = new BoundingBox(p1,
+                p2.getX() - p1.getX(),
+                p2.getY() - p1.getY());
         this.topLeftQuadrant = new Quadrant(box);
 
         p1 = new Point(midX, topLeft.getY());
         p2 = new Point(bottomRight.getX(), midY);
-        box = new BoundingBox(p1, p2);
+        box = new BoundingBox(p1,
+                p2.getX() - p1.getX(),
+                p2.getY() - p1.getY());
         this.topRightQuadrant = new Quadrant(box);
 
         p1 = new Point(topLeft.getX(), midY);
         p2 = new Point(midX, bottomRight.getY());
-        box = new BoundingBox(p1, p2);
+        box = new BoundingBox(p1,
+                p2.getX() - p1.getX(),
+                p2.getY() - p1.getY());
         this.bottomLeftQuadrant = new Quadrant(box);
 
         p1 = new Point(midX, midY);
         p2 = new Point(bottomRight);
-        box = new BoundingBox(p1, p2);
+        box = new BoundingBox(p1,
+                p2.getX() - p1.getX(),
+                p2.getY() - p1.getY());
         this.bottomRightQuadrant = new Quadrant(box);
     }
 }
