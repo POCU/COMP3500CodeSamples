@@ -34,7 +34,7 @@ public final class Quadrant {
         }
 
         if (this.topLeftQuadrant == null) {
-            createQuadrants();
+            createChildQuadrants();
         }
 
         return this.topLeftQuadrant
@@ -81,7 +81,7 @@ public final class Quadrant {
         return gameObjects;
     }
 
-    private void createQuadrants() {
+    private void createChildQuadrants() {
         Point topLeft = this.boundingBox.getTopLeft();
         Point bottomRight = this.boundingBox.getBottomRight();
 
