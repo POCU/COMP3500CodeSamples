@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public final class Quadrant {
     private static final int MAX_GAME_OBJECTS_COUNT = 3;
 
-    private final BoundingBox boundingBox;
+    private final BoundingRect boundingRect;
 
     private Quadrant topLeftQuadrant;
     private Quadrant topRightQuadrant;
@@ -14,8 +14,8 @@ public final class Quadrant {
 
     private ArrayList<GameObject> gameObjects = new ArrayList<>();
 
-    public Quadrant(final BoundingBox boundingBox) {
-        this.boundingBox = boundingBox;
+    public Quadrant(final BoundingRect boundingRect) {
+        this.boundingRect = boundingRect;
     }
 
     public boolean insert(final GameObject gameObject) {
@@ -24,7 +24,7 @@ public final class Quadrant {
         }
 
         final Point point = gameObject.getPoint();
-        if (!this.boundingBox.contains(point)) {
+        if (!this.boundingRect.contains(point)) {
             return false;
         }
 
@@ -47,10 +47,10 @@ public final class Quadrant {
                     .insert(gameObject);
     }
 
-    public ArrayList<GameObject> getGameObjects(final BoundingBox box) {
+    public ArrayList<GameObject> getGameObjects(final BoundingRect box) {
         ArrayList<GameObject> gameObjects = new ArrayList<>();
 
-        if (!this.boundingBox.overlaps(box)) {
+        if (!this.boundingRect.overlaps(box)) {
             return gameObjects;
         }
 
@@ -82,36 +82,36 @@ public final class Quadrant {
     }
 
     private void createChildQuadrants() {
-        Point topLeft = this.boundingBox.getTopLeft();
-        Point bottomRight = this.boundingBox.getBottomRight();
+        Point topLeft = this.boundingRect.getTopLeft();
+        Point bottomRight = this.boundingRect.getBottomRight();
 
         int midX = (topLeft.getX() + bottomRight.getX()) / 2;
         int midY = (topLeft.getY() + bottomRight.getY()) / 2;
 
         Point p1 = new Point(topLeft);
         Point p2 = new Point(midX, midY);
-        BoundingBox box = new BoundingBox(p1,
+        BoundingRect box = new BoundingRect(p1,
                 p2.getX() - p1.getX(),
                 p2.getY() - p1.getY());
         this.topLeftQuadrant = new Quadrant(box);
 
         p1 = new Point(midX, topLeft.getY());
         p2 = new Point(bottomRight.getX(), midY);
-        box = new BoundingBox(p1,
+        box = new BoundingRect(p1,
                 p2.getX() - p1.getX(),
                 p2.getY() - p1.getY());
         this.topRightQuadrant = new Quadrant(box);
 
         p1 = new Point(topLeft.getX(), midY);
         p2 = new Point(midX, bottomRight.getY());
-        box = new BoundingBox(p1,
+        box = new BoundingRect(p1,
                 p2.getX() - p1.getX(),
                 p2.getY() - p1.getY());
         this.bottomLeftQuadrant = new Quadrant(box);
 
         p1 = new Point(midX, midY);
         p2 = new Point(bottomRight);
-        box = new BoundingBox(p1,
+        box = new BoundingRect(p1,
                 p2.getX() - p1.getX(),
                 p2.getY() - p1.getY());
         this.bottomRightQuadrant = new Quadrant(box);

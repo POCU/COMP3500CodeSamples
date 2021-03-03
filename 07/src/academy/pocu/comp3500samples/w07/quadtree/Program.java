@@ -24,7 +24,7 @@ public class Program {
 
         Point topLeft = new Point(0, 0);
 
-        BoundingBox box = new BoundingBox(topLeft, 10, 10);
+        BoundingRect box = new BoundingRect(topLeft, 10, 10);
         final Quadrant root = new Quadrant(box);
 
         root.insert(gameObject1);
@@ -35,21 +35,21 @@ public class Program {
         root.insert(gameObject6);
 
         topLeft = new Point(0, 2);
-        box = new BoundingBox(topLeft, 8, 2);
+        box = new BoundingRect(topLeft, 8, 2);
 
         ArrayList<GameObject> gameObjects = root.getGameObjects(box);
 
         print(gameObjects);
 
         topLeft = new Point(2, 1);
-        box = new BoundingBox(topLeft, 6, 8);
+        box = new BoundingRect(topLeft, 6, 8);
 
         gameObjects = root.getGameObjects(box);
 
         print(gameObjects);
 
         topLeft = new Point(2, 4);
-        box = new BoundingBox(topLeft, 3, 3);
+        box = new BoundingRect(topLeft, 3, 3);
 
         gameObjects = root.getGameObjects(box);
 

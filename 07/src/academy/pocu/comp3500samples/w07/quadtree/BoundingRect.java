@@ -1,10 +1,10 @@
 package academy.pocu.comp3500samples.w07.quadtree;
 
-public final class BoundingBox {
+public final class BoundingRect {
     private final Point topLeft;
     private final Point bottomRight;
 
-    public BoundingBox(final Point topLeft, final int width, final int height) {
+    public BoundingRect(final Point topLeft, final int width, final int height) {
         assert (width >= 0);
         assert (height >= 0);
 
@@ -31,7 +31,7 @@ public final class BoundingBox {
                 && pY <= this.bottomRight.getY();
     }
 
-    public boolean overlaps(final BoundingBox other) {
+    public boolean overlaps(final BoundingRect other) {
         if (this.topLeft.getX() > other.bottomRight.getX()
                 || other.topLeft.getX() > this.bottomRight.getX()) {
             return false;
