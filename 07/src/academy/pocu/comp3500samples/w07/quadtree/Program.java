@@ -27,12 +27,12 @@ public class Program {
         BoundingRect box = new BoundingRect(topLeft, 10, 10);
         final Quadrant root = new Quadrant(box);
 
-        root.insert(gameObject1);
-        root.insert(gameObject2);
-        root.insert(gameObject3);
-        root.insert(gameObject4);
-        root.insert(gameObject5);
-        root.insert(gameObject6);
+        assert (root.insert(gameObject1));
+        assert (root.insert(gameObject2));
+        assert (root.insert(gameObject3));
+        assert (root.insert(gameObject4));
+        assert (root.insert(gameObject5));
+        assert (root.insert(gameObject6));
 
         topLeft = new Point(0, 2);
         box = new BoundingRect(topLeft, 8, 2);
