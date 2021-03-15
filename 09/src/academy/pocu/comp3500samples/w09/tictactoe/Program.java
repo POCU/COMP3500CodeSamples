@@ -1,36 +1,29 @@
 package academy.pocu.comp3500samples.w09.tictactoe;
 
-import java.time.Duration;
-import java.time.Instant;
-
 public class Program {
     public static void main(String[] args) {
-        TicTacToe tictactoe = new TicTacToe(EMarker.O);
+        {
+            Player[] board = new Player[TicTacToe.BOARD_SIZE];
 
-        Instant start = Instant.now();
-        Move bestMove = tictactoe.getBestMove(EMarker.X);
-        Instant finish = Instant.now();
+            int index = TicTacToe.getBestPlayIndex(board, Player.X);
 
-        long timeElapsed = Duration.between(start, finish).toMillis();
+            System.out.println(String.format("best move index: %d", index));
+        }
 
-        System.out.println(String.format("elapsed (ms): %d", timeElapsed));
-        System.out.println(String.format("best move index: %d", bestMove.getIndex()));
-        System.out.println(String.format("function calls: %d", tictactoe.getNumFunctionCalls()));
+        {
+            Player[] board = new Player[] { null, Player.O, Player.X, Player.X, Player.O, Player.O, null, null, Player.X };
 
-        // -------------------------------------------------------
+            int index = TicTacToe.getBestPlayIndex(board, Player.X);
 
-        EMarker[] board = new EMarker[] { EMarker.O, EMarker.EMPTY, EMarker.X, EMarker.X, EMarker.EMPTY, EMarker.X, EMarker.EMPTY, EMarker.O, EMarker.O };
+            System.out.println(String.format("best move index: %d", index));
+        }
 
-        tictactoe = new TicTacToe(EMarker.O, board);
+        {
+            Player[] board = new Player[] { Player.O, null, Player.X, Player.X, null, Player.X, null, Player.O, Player.O };
 
-        start = Instant.now();
-        bestMove = tictactoe.getBestMove(EMarker.X);
-        finish = Instant.now();
+            int index = TicTacToe.getBestPlayIndex(board, Player.X);
 
-        timeElapsed = Duration.between(start, finish).toMillis();
-
-        System.out.println(String.format("elapsed (ms): %d", timeElapsed));
-        System.out.println(String.format("best move index: %d", bestMove.getIndex()));
-        System.out.println(String.format("function calls: %d", tictactoe.getNumFunctionCalls()));
+            System.out.println(String.format("best move index: %d", index));
+        }
     }
 }

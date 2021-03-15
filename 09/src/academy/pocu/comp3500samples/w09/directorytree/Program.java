@@ -12,30 +12,27 @@ public class Program {
         }
 
         String path = args[0];
-
         File file = new File(path);
 
-        if (!file.isDirectory()) {
-            System.err.println("The path provided is not a directory.");
-            System.exit(1);
-        }
-
-        printDirectoryTree(file, 0);
+        printDirectoryTreeRecursive(file, 0);
     }
 
-    private static void printDirectoryTree(File file, int depth) {
+    private static void printDirectoryTreeRecursive(File file, int depth) {
         String filename = file.getName();
 
-        String message = String.format("- %s", filename);
-        message = padLeft(INDENT_LENGTH * depth, message);
+        String message = String.format("- %s",
+                filename);
+        message = padLeft(INDENT_LENGTH * depth,
+                message);
 
         System.out.println(message);
 
         if (file.isDirectory()) {
-            File[] files = file.listFiles();
+            File[] children = file.listFiles();
 
-            for (File f : files) {
-                printDirectoryTree(f, depth + 1);
+            for (File child : children) {
+                printDirectoryTreeRecursive(child,
+                        depth + 1);
             }
         }
     }

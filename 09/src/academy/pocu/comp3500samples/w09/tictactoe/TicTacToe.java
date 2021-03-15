@@ -3,48 +3,42 @@ package academy.pocu.comp3500samples.w09.tictactoe;
 import java.util.ArrayList;
 
 public class TicTacToe {
-    private static final int BOARD_SIZE = 9;
+    public static final int BOARD_SIZE = 9;
 
-    private EMarker[] board;
-    private EMarker player1;
-    private EMarker player2;
-    private int numFunctionCalls = 0;
-
-    public int getNumFunctionCalls() {
-        return this.numFunctionCalls;
+    private TicTacToe() {
     }
 
-    public TicTacToe(final EMarker player) {
-        this(player, getEmptyBoard());
-    }
-
-    public TicTacToe(final EMarker player, final EMarker[] board) {
-        assert (player != EMarker.EMPTY);
+    public static int getBestPlayIndex(final Player[] board, final Player player) {
         assert (board.length == BOARD_SIZE);
 
-        this.board = board;
-        this.player1 = player;
-        this.player2 = player == EMarker.O ? EMarker.X : EMarker.O;
+        Player opponent = player == Player.O
+                ? Player.X : Player.O;
+
+        int index = getBestMoveRecursive(board,
+                player,
+                opponent,
+                player)
+                .getIndex();
+
+        return index;
     }
 
-    public Move getBestMove(final EMarker player) {
-        return getBestMoveRecursive(this.board, player);
-    }
+    private static Move getBestMoveRecursive(final Player[] board,
+                                             final Player player,
+                                             final Player opponent,
+                                             final Player turn) {
+        assert (board.length == BOARD_SIZE);
 
-    private Move getBestMoveRecursive(final EMarker[] newBoard, final EMarker player) {
-        numFunctionCalls++;
-
-        ArrayList<Integer> availableIndexes = getEmptyIndexes(newBoard);
-
-        if (isWinningBoard(newBoard, this.player1)) {
+        if (isWinningBoard(board, opponent)) {
             return new Move(-1, -10);
         }
 
-        if (isWinningBoard(newBoard, this.player2)) {
+        if (isWinningBoard(board, player)) {
             return new Move(-1, 10);
         }
 
-        if (availableIndexes.size() == 0) {
+        ArrayList<Integer> availableIndexes = getEmptyIndexes(board);
+        if (availableIndexes.isEmpty()) {
             return new Move(-1, 0);
         }
 
@@ -53,60 +47,75 @@ public class TicTacToe {
         for (int i = 0; i < availableIndexes.size(); ++i) {
             int index = availableIndexes.get(i);
 
-            newBoard[availableIndexes.get(i)] = player;
+            Player[] newBoard = copyBoard(board);
 
-            int score;
-            if (player == this.player1) {
-                score = getBestMoveRecursive(newBoard, this.player2).getScore();
-            } else {
-                score = getBestMoveRecursive(newBoard, this.player1).getScore();
-            }
+            newBoard[availableIndexes.get(i)] = turn;
 
-            newBoard[availableIndexes.get(i)] = EMarker.EMPTY;
+            Player nextPlayer = turn == player
+                    ? opponent : player;
+
+            int score = getBestMoveRecursive(newBoard,
+                    player,
+                    opponent,
+                    nextPlayer)
+                    .getScore();
 
             Move move = new Move(index, score);
             moves.add(move);
         }
 
-        int bestIndex = 0;
+        if (turn == player) {
+            return getMaxScoreMove(moves);
+        }
 
-        if (player == this.player2) {
-            int maxScore = Integer.MIN_VALUE;
-            for (int i = 0; i < moves.size(); ++i) {
-                if (moves.get(i).getScore() > maxScore) {
-                    maxScore = moves.get(i).getScore();
-                    bestIndex = i;
-                }
-            }
+        return getMinScoreMove(moves);
+    }
 
-        } else {
-            int minScore = Integer.MAX_VALUE;
-            for (int i = 0; i < moves.size(); ++i) {
-                if (moves.get(i).getScore() < minScore) {
-                    minScore = moves.get(i).getScore();
-                    bestIndex = i;
-                }
+    private static Move getMaxScoreMove(final ArrayList<Move> moves) {
+        assert (!moves.isEmpty());
+
+        Move bestMove = moves.get(0);
+        for (int i = 1; i < moves.size(); ++i) {
+            if (moves.get(i).getScore() > bestMove.getScore()) {
+                bestMove = moves.get(i);
             }
         }
 
-        return moves.get(bestIndex);
+        return bestMove;
     }
 
-    private static EMarker[] getEmptyBoard() {
-        EMarker[] board = new EMarker[BOARD_SIZE];
+    private static Move getMinScoreMove(final ArrayList<Move> moves) {
+        assert (!moves.isEmpty());
+
+        Move bestMove = moves.get(0);
+        for (int i = 0; i < moves.size(); ++i) {
+            if (moves.get(i).getScore() < bestMove.getScore()) {
+                bestMove = moves.get(i);
+            }
+        }
+
+        return bestMove;
+    }
+
+    private static Player[] copyBoard(final Player[] board) {
+        assert (board.length == BOARD_SIZE);
+
+        Player[] newBoard = new Player[board.length];
 
         for (int i = 0; i < board.length; ++i) {
-            board[i] = EMarker.EMPTY;
+            newBoard[i] = board[i];
         }
 
-        return board;
+        return newBoard;
     }
 
-    private static ArrayList<Integer> getEmptyIndexes(final EMarker[] board) {
+    private static ArrayList<Integer> getEmptyIndexes(final Player[] board) {
+        assert (board.length == BOARD_SIZE);
+
         ArrayList<Integer> indexes = new ArrayList<>();
 
         for (int i = 0; i < board.length; ++i) {
-            if (board[i] == EMarker.EMPTY) {
+            if (board[i] == null) {
                 indexes.add(i);
             }
         }
@@ -114,7 +123,9 @@ public class TicTacToe {
         return indexes;
     }
 
-    private static boolean isWinningBoard(final EMarker[] board, final EMarker player) {
+    private static boolean isWinningBoard(final Player[] board, final Player player) {
+        assert (board.length == BOARD_SIZE);
+
         return (board[0] == player && board[1] == player && board[2] == player)
                 || (board[3] == player && board[4] == player && board[5] == player)
                 || (board[6] == player && board[7] == player && board[8] == player)

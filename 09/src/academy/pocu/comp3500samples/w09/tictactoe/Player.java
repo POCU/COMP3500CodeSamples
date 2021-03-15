@@ -1,7 +1,6 @@
 package academy.pocu.comp3500samples.w09.tictactoe;
 
-public enum EMarker {
-    EMPTY,
+public enum Player {
     X,
     O
 }
