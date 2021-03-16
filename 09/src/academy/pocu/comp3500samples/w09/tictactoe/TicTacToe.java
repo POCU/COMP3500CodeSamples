@@ -14,13 +14,12 @@ public class TicTacToe {
         Player opponent = player == Player.O
                 ? Player.X : Player.O;
 
-        int index = getBestMoveRecursive(board,
+        Move move = getBestMoveRecursive(board,
                 player,
                 opponent,
-                player)
-                .getIndex();
+                player);
 
-        return index;
+        return move.getIndex();
     }
 
     private static Move getBestMoveRecursive(final Player[] board,
@@ -29,11 +28,11 @@ public class TicTacToe {
                                              final Player turn) {
         assert (board.length == BOARD_SIZE);
 
-        if (isWinningBoard(board, opponent)) {
+        if (hasWon(board, opponent)) {
             return new Move(-1, -10);
         }
 
-        if (isWinningBoard(board, player)) {
+        if (hasWon(board, player)) {
             return new Move(-1, 10);
         }
 
@@ -123,7 +122,7 @@ public class TicTacToe {
         return indexes;
     }
 
-    private static boolean isWinningBoard(final Player[] board, final Player player) {
+    private static boolean hasWon(final Player[] board, final Player player) {
         assert (board.length == BOARD_SIZE);
 
         return (board[0] == player && board[1] == player && board[2] == player)
