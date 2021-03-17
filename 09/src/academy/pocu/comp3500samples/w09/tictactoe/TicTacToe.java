@@ -8,7 +8,7 @@ public class TicTacToe {
     private TicTacToe() {
     }
 
-    public static int getBestPlayIndex(final Player[] board, final Player player) {
+    public static int getBestMoveIndex(final Player[] board, final Player player) {
         assert (board.length == BOARD_SIZE);
 
         Player opponent = player == Player.O
@@ -22,10 +22,7 @@ public class TicTacToe {
         return move.getIndex();
     }
 
-    private static Move getBestMoveRecursive(final Player[] board,
-                                             final Player player,
-                                             final Player opponent,
-                                             final Player turn) {
+    private static Move getBestMoveRecursive(final Player[] board, final Player player, final Player opponent, final Player turn) {
         assert (board.length == BOARD_SIZE);
 
         if (hasWon(board, opponent)) {
@@ -48,7 +45,7 @@ public class TicTacToe {
 
             Player[] newBoard = copyBoard(board);
 
-            newBoard[availableIndexes.get(i)] = turn;
+            newBoard[index] = turn;
 
             Player nextPlayer = turn == player
                     ? opponent : player;
