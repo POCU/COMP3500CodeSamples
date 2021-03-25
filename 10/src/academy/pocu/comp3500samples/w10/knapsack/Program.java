@@ -15,12 +15,12 @@ public class Program {
         System.out.println(String.format("Max Value: %d", maxValue));
     }
 
-    private static int getMaxValue(int maxSpace, Item[] items) {
+    private static int getMaxValue(int numSpace, Item[] items) {
         int numItems = items.length;
 
-        int cache[][] = new int[numItems][maxSpace + 1];
+        int cache[][] = new int[numItems][numSpace + 1];
 
-        for (int s = 1; s <= maxSpace; ++s) {
+        for (int s = 1; s <= numSpace; ++s) {
             if (items[0].getSpace() > s) {
                 continue;
             }
@@ -29,7 +29,7 @@ public class Program {
         }
 
         for (int i = 1; i < numItems; ++i) {
-            for (int s = 1; s <= maxSpace; ++s) {
+            for (int s = 1; s <= numSpace; ++s) {
                 if (items[i].getSpace() > s) {
                     cache[i][s] = cache[i - 1][s];
                     continue;
@@ -43,6 +43,6 @@ public class Program {
             }
         }
 
-        return cache[numItems - 1][maxSpace];
+        return cache[numItems - 1][numSpace];
     }
 }
