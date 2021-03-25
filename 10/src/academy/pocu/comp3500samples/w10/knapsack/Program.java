@@ -35,11 +35,15 @@ public class Program {
                     continue;
                 }
 
-                int choice1 = items[i].getValue()
-                        + cache[i - 1][s - items[i].getSpace()];
-                int choice2 = cache[i - 1][s];
+                int remainingSpace = s - items[i].getSpace();
+                int remainingMaxValue = cache[i - 1][remainingSpace];
 
-                cache[i][s] = Math.max(choice1, choice2);
+                int choice1 = cache[i - 1][s];
+                int choice2 = items[i].getValue()
+                        + remainingMaxValue;
+
+                cache[i][s] = Math.max(choice1,
+                        choice2);
             }
         }
 
