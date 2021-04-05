@@ -9,72 +9,75 @@ import java.util.Base64;
 public class Program {
     public static void main(String[] args) {
         String plaintext = "My message";
-        String longerPlaintext = "My longer message";
+        String longPlaintext = "My longer message";
 
         {
             String aes128key = "1234567890123456";
+            byte[] keyInBytes = aes128key.getBytes(StandardCharsets.US_ASCII);
 
-            String ciphertext = encrypt(plaintext, aes128key);
-            String longerCiphertext = encrypt(longerPlaintext, aes128key);
+            String ciphertext = encrypt(plaintext, keyInBytes);
+            String longCiphertext = encrypt(longPlaintext, keyInBytes);
 
             System.out.println(ciphertext);
-            System.out.println(longerCiphertext);
+            System.out.println(longCiphertext);
 
-            String actualPlaintext = decrypt(ciphertext, aes128key);
-            String actualLongerPlaintext = decrypt(longerCiphertext, aes128key);
+            String decryptedText = decrypt(ciphertext, keyInBytes);
+            String longDecryptedText = decrypt(longCiphertext, keyInBytes);
 
-            System.out.println(actualPlaintext);
-            System.out.println(actualLongerPlaintext);
+            System.out.println(decryptedText);
+            System.out.println(longDecryptedText);
         }
 
         {
             String aes192key = "123456789012345678901234";
+            byte[] keyInBytes = aes192key.getBytes(StandardCharsets.US_ASCII);
 
-            String ciphertext = encrypt(plaintext, aes192key);
-            String longerCiphertext = encrypt(longerPlaintext, aes192key);
+            String ciphertext = encrypt(plaintext, keyInBytes);
+            String longCiphertext = encrypt(longPlaintext, keyInBytes);
 
             System.out.println(ciphertext);
-            System.out.println(longerCiphertext);
+            System.out.println(longCiphertext);
 
-            String actualPlaintext = decrypt(ciphertext, aes192key);
-            String actualLongerPlaintext = decrypt(longerCiphertext, aes192key);
+            String decryptedText = decrypt(ciphertext, keyInBytes);
+            String longDecryptedText = decrypt(longCiphertext, keyInBytes);
 
-            System.out.println(actualPlaintext);
-            System.out.println(actualLongerPlaintext);
+            System.out.println(decryptedText);
+            System.out.println(longDecryptedText);
         }
 
         {
             String aes256key = "12345678901234567890123456789012";
+            byte[] keyInBytes = aes256key.getBytes(StandardCharsets.US_ASCII);
 
-            String ciphertext = encrypt(plaintext, aes256key);
-            String longerCiphertext = encrypt(longerPlaintext, aes256key);
+            String ciphertext = encrypt(plaintext, keyInBytes);
+            String longCiphertext = encrypt(longPlaintext, keyInBytes);
 
             System.out.println(ciphertext);
-            System.out.println(longerCiphertext);
+            System.out.println(longCiphertext);
 
-            String actualPlaintext = decrypt(ciphertext, aes256key);
-            String actualLongerPlaintext = decrypt(longerCiphertext, aes256key);
+            String decryptedText = decrypt(ciphertext, keyInBytes);
+            String longDecryptedText = decrypt(longCiphertext, keyInBytes);
 
-            System.out.println(actualPlaintext);
-            System.out.println(actualLongerPlaintext);
+            System.out.println(decryptedText);
+            System.out.println(longDecryptedText);
         }
     }
 
-    private static String encrypt(String plaintext, String key) {
-        assert (key.length() == 16 || key.length() == 24 || key.length() == 32);
+    private static String encrypt(String plaintext, byte[] key) {
+        assert (key.length == 16 || key.length == 24 || key.length == 32);
 
         try {
-            byte[] keyInBytes = key.getBytes(StandardCharsets.UTF_8);
             byte[] plaintextInBytes = plaintext.getBytes(StandardCharsets.UTF_8);
 
-            SecretKeySpec secretKey = new SecretKeySpec(keyInBytes, "AES");
+            SecretKeySpec secretKey = new SecretKeySpec(key, "AES");
 
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE,
                     secretKey,
                     new IvParameterSpec(new byte[16]));
 
-            byte[] encrypted = cipher.doFinal(plaintextInBytes);
+            byte[] encrypted = cipher
+                    .doFinal(plaintextInBytes);
 
             return Base64.getEncoder()
                     .encodeToString(encrypted);
@@ -84,24 +87,24 @@ public class Program {
         }
     }
 
-    private static String decrypt(String cipherText, String key) {
-        assert (key.length() == 16 || key.length() == 24 || key.length() == 32);
+    private static String decrypt(String cipherText, byte[] key) {
+        assert (key.length == 16 || key.length == 24 || key.length == 32);
 
         try {
-            byte[] keyInBytes = key.getBytes(StandardCharsets.UTF_8);
             byte[] encrypted = Base64.getDecoder()
                     .decode(cipherText);
 
-            SecretKeySpec secretKey = new SecretKeySpec(keyInBytes, "AES");
+            SecretKeySpec secretKey = new SecretKeySpec(key, "AES");
 
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE,
                     secretKey,
                     new IvParameterSpec(new byte[16]));
 
-            byte[] plaintext = cipher.doFinal(encrypted);
+            byte[] plaintext = cipher
+                    .doFinal(encrypted);
 
-            return new String(plaintext);
+            return new String(plaintext, StandardCharsets.UTF_8);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
