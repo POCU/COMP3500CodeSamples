@@ -63,8 +63,8 @@ public class Program {
             System.out.println(String.format("%d. [%d] (%d, %d)",
                     i + 1,
                     obj.getData(),
-                    obj.getPoint().getX(),
-                    obj.getPoint().getY()));
+                    obj.getPosition().getX(),
+                    obj.getPosition().getY()));
         }
 
         System.out.println(String.format("Count: %d", gameObjects.size()));

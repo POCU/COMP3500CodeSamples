@@ -3,31 +3,80 @@ package academy.pocu.comp3500samples.w07.quadtree;
 import java.util.ArrayList;
 
 public final class Quadrant {
-    private static final int MAX_UNIT_QUAD_DIMENSION_LENGTH = 2;
+    private static final int MIN_QUAD_DIMENSION = 2;
 
     private final BoundingRect boundingRect;
 
-    private Quadrant topLeftQuadrant;
-    private Quadrant topRightQuadrant;
-    private Quadrant bottomLeftQuadrant;
-    private Quadrant bottomRightQuadrant;
+    private Quadrant topLeft;
+    private Quadrant topRight;
+    private Quadrant bottomLeft;
+    private Quadrant bottomRight;
 
     private ArrayList<GameObject> gameObjects = new ArrayList<>();
 
     public Quadrant(final BoundingRect boundingRect) {
         this.boundingRect = boundingRect;
+
+        createChildren();
     }
 
     public boolean insert(final GameObject gameObject) {
-        if (gameObject == null) {
-            return false;
-        }
+        final Point point = gameObject.getPosition();
 
-        final Point point = gameObject.getPoint();
         if (!this.boundingRect.contains(point)) {
             return false;
         }
 
+        this.gameObjects.add(gameObject);
+
+        if (this.topLeft != null) {
+            this.topLeft.insert(gameObject);
+        }
+
+        if (this.topRight != null) {
+            this.topRight.insert(gameObject);
+        }
+
+        if (this.bottomLeft != null) {
+            this.bottomLeft.insert(gameObject);
+        }
+
+        if (this.bottomRight != null) {
+            this.bottomRight.insert(gameObject);
+        }
+
+        return true;
+    }
+
+    public ArrayList<GameObject> getGameObjects(final BoundingRect rect) {
+        if (!this.boundingRect.contains(rect)) {
+            return new ArrayList<>();
+        }
+
+        if (this.topLeft.boundingRect.contains(rect)) {
+            return this.topLeft
+                    .getGameObjects(rect);
+        }
+
+        if (this.topRight.boundingRect.contains(rect)) {
+            return this.topRight
+                    .getGameObjects(rect);
+        }
+
+        if (this.bottomRight.boundingRect.contains(rect)) {
+            return this.bottomRight
+                    .getGameObjects(rect);
+        }
+
+        if (this.bottomLeft.boundingRect.contains(rect)) {
+            return this.bottomLeft
+                    .getGameObjects(rect);
+        }
+
+        return this.gameObjects;
+    }
+
+    private void createChildren() {
         int x1 = this.boundingRect
                 .getTopLeft()
                 .getX();
@@ -41,31 +90,19 @@ public final class Quadrant {
                 .getBottomRight()
                 .getY();
 
-        int width = Math.abs(x1 - x2);
-        int height = Math.abs(y1 - y2);
-
-        if (width <= MAX_UNIT_QUAD_DIMENSION_LENGTH
-            && height <= MAX_UNIT_QUAD_DIMENSION_LENGTH) {
-            this.gameObjects.add(gameObject);
-            return true;
-        }
-
         int midX = (x1 + x2) / 2;
         int midY = (y1 + y2) / 2;
 
         Point p1 = new Point(x1, y1);
         Point p2 = new Point(midX, midY);
+
         BoundingRect rect = new BoundingRect(p1,
                 p2.getX() - p1.getX(),
                 p2.getY() - p1.getY());
 
-        if (rect.contains(point)) {
-            if (this.topLeftQuadrant == null) {
-                this.topLeftQuadrant = new Quadrant(rect);
-            }
-
-            return this.topLeftQuadrant
-                    .insert(gameObject);
+        if (rect.getWidth() >= MIN_QUAD_DIMENSION
+                && rect.getHeight() >= MIN_QUAD_DIMENSION) {
+            this.topLeft = new Quadrant(rect);
         }
 
         p1 = new Point(midX, y1);
@@ -74,13 +111,9 @@ public final class Quadrant {
                 p2.getX() - p1.getX(),
                 p2.getY() - p1.getY());
 
-        if (rect.contains(point)) {
-            if (this.topRightQuadrant == null) {
-                this.topRightQuadrant = new Quadrant(rect);
-            }
-
-            return this.topRightQuadrant
-                    .insert(gameObject);
+        if (rect.getWidth() >= MIN_QUAD_DIMENSION
+                && rect.getHeight() >= MIN_QUAD_DIMENSION) {
+            this.topRight = new Quadrant(rect);
         }
 
         p1 = new Point(x1, midY);
@@ -89,13 +122,9 @@ public final class Quadrant {
                 p2.getX() - p1.getX(),
                 p2.getY() - p1.getY());
 
-        if (rect.contains(point)) {
-            if (this.bottomLeftQuadrant == null) {
-                this.bottomLeftQuadrant = new Quadrant(rect);
-            }
-
-            return this.bottomLeftQuadrant
-                    .insert(gameObject);
+        if (rect.getWidth() >= MIN_QUAD_DIMENSION
+                && rect.getHeight() >= MIN_QUAD_DIMENSION) {
+            this.bottomLeft = new Quadrant(rect);
         }
 
         p1 = new Point(midX, midY);
@@ -104,54 +133,9 @@ public final class Quadrant {
                 p2.getX() - p1.getX(),
                 p2.getY() - p1.getY());
 
-        if (rect.contains(point)) {
-            if (this.bottomRightQuadrant == null) {
-                this.bottomRightQuadrant = new Quadrant(rect);
-            }
-
-            return this.bottomRightQuadrant
-                    .insert(gameObject);
+        if (rect.getWidth() >= MIN_QUAD_DIMENSION
+                && rect.getHeight() >= MIN_QUAD_DIMENSION) {
+            this.bottomRight = new Quadrant(rect);
         }
-
-        assert false : "Should never happen";
-        return false;
-    }
-
-    public ArrayList<GameObject> getGameObjects(final BoundingRect rect) {
-        ArrayList<GameObject> gameObjects = new ArrayList<>();
-
-        if (!this.boundingRect.overlaps(rect)) {
-            return gameObjects;
-        }
-
-        for (int i = 0; i < this.gameObjects.size(); ++i) {
-            final GameObject object = this.gameObjects.get(i);
-
-            if (rect.contains(object.getPoint())) {
-                gameObjects.add(object);
-            }
-        }
-
-        if (this.topLeftQuadrant != null) {
-            gameObjects.addAll(this.topLeftQuadrant
-                    .getGameObjects(rect));
-        }
-
-        if (this.topRightQuadrant != null) {
-            gameObjects.addAll(this.topRightQuadrant
-                    .getGameObjects(rect));
-        }
-
-        if (this.bottomLeftQuadrant != null) {
-            gameObjects.addAll(this.bottomLeftQuadrant
-                    .getGameObjects(rect));
-        }
-
-        if (this.bottomRightQuadrant != null) {
-            gameObjects.addAll(this.bottomRightQuadrant
-                    .getGameObjects(rect));
-        }
-
-        return gameObjects;
     }
 }
