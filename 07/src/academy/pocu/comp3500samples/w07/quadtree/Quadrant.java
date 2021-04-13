@@ -21,9 +21,9 @@ public final class Quadrant {
     }
 
     public boolean insert(final GameObject gameObject) {
-        final Point point = gameObject.getPosition();
+        final Point position = gameObject.getPosition();
 
-        if (!this.boundingRect.contains(point)) {
+        if (!this.boundingRect.contains(position)) {
             return false;
         }
 
