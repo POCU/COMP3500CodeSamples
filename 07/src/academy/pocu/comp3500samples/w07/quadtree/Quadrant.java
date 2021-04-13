@@ -31,17 +31,8 @@ public final class Quadrant {
 
         if (this.topLeft != null) {
             this.topLeft.insert(gameObject);
-        }
-
-        if (this.topRight != null) {
             this.topRight.insert(gameObject);
-        }
-
-        if (this.bottomLeft != null) {
             this.bottomLeft.insert(gameObject);
-        }
-
-        if (this.bottomRight != null) {
             this.bottomRight.insert(gameObject);
         }
 
@@ -51,6 +42,10 @@ public final class Quadrant {
     public ArrayList<GameObject> getGameObjects(final BoundingRect rect) {
         if (!this.boundingRect.contains(rect)) {
             return new ArrayList<>();
+        }
+
+        if (this.topLeft == null) {
+            return this.gameObjects;
         }
 
         if (this.topLeft.boundingRect.contains(rect)) {
@@ -77,6 +72,14 @@ public final class Quadrant {
     }
 
     private void createChildren() {
+        final int width = this.boundingRect.getWidth();
+        final int height = this.boundingRect.getHeight();
+
+        if (width < 2 * MIN_QUAD_DIMENSION
+            || height < 2 * MIN_QUAD_DIMENSION) {
+            return;
+        }
+
         int x1 = this.boundingRect
                 .getTopLeft()
                 .getX();
@@ -100,10 +103,7 @@ public final class Quadrant {
                 p2.getX() - p1.getX(),
                 p2.getY() - p1.getY());
 
-        if (rect.getWidth() >= MIN_QUAD_DIMENSION
-                && rect.getHeight() >= MIN_QUAD_DIMENSION) {
-            this.topLeft = new Quadrant(rect);
-        }
+        this.topLeft = new Quadrant(rect);
 
         p1 = new Point(midX, y1);
         p2 = new Point(x2, midY);
@@ -111,10 +111,7 @@ public final class Quadrant {
                 p2.getX() - p1.getX(),
                 p2.getY() - p1.getY());
 
-        if (rect.getWidth() >= MIN_QUAD_DIMENSION
-                && rect.getHeight() >= MIN_QUAD_DIMENSION) {
-            this.topRight = new Quadrant(rect);
-        }
+        this.topRight = new Quadrant(rect);
 
         p1 = new Point(x1, midY);
         p2 = new Point(midX, y2);
@@ -122,10 +119,7 @@ public final class Quadrant {
                 p2.getX() - p1.getX(),
                 p2.getY() - p1.getY());
 
-        if (rect.getWidth() >= MIN_QUAD_DIMENSION
-                && rect.getHeight() >= MIN_QUAD_DIMENSION) {
-            this.bottomLeft = new Quadrant(rect);
-        }
+        this.bottomLeft = new Quadrant(rect);
 
         p1 = new Point(midX, midY);
         p2 = new Point(x2, y2);
@@ -133,9 +127,6 @@ public final class Quadrant {
                 p2.getX() - p1.getX(),
                 p2.getY() - p1.getY());
 
-        if (rect.getWidth() >= MIN_QUAD_DIMENSION
-                && rect.getHeight() >= MIN_QUAD_DIMENSION) {
-            this.bottomRight = new Quadrant(rect);
-        }
+        this.bottomRight = new Quadrant(rect);
     }
 }
