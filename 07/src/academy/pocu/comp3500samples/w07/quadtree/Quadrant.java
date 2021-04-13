@@ -21,9 +21,11 @@ public final class Quadrant {
     }
 
     public boolean insert(final GameObject gameObject) {
-        final Point position = gameObject.getPosition();
+        final Point position = gameObject
+                .getPosition();
 
-        if (!this.boundingRect.contains(position)) {
+        if (!this.boundingRect
+                .contains(position)) {
             return false;
         }
 
@@ -48,22 +50,26 @@ public final class Quadrant {
             return this.gameObjects;
         }
 
-        if (this.topLeft.boundingRect.contains(rect)) {
+        if (this.topLeft.boundingRect
+                .contains(rect)) {
             return this.topLeft
                     .getGameObjects(rect);
         }
 
-        if (this.topRight.boundingRect.contains(rect)) {
+        if (this.topRight.boundingRect
+                .contains(rect)) {
             return this.topRight
                     .getGameObjects(rect);
         }
 
-        if (this.bottomRight.boundingRect.contains(rect)) {
+        if (this.bottomRight.boundingRect
+                .contains(rect)) {
             return this.bottomRight
                     .getGameObjects(rect);
         }
 
-        if (this.bottomLeft.boundingRect.contains(rect)) {
+        if (this.bottomLeft.boundingRect
+                .contains(rect)) {
             return this.bottomLeft
                     .getGameObjects(rect);
         }

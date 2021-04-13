@@ -27,29 +27,29 @@ public class Program {
         BoundingRect rect = new BoundingRect(topLeft, 10, 10);
         final Quadrant root = new Quadrant(rect);
 
-        assert (root.insert(gameObject1));
-        assert (root.insert(gameObject2));
-        assert (root.insert(gameObject3));
-        assert (root.insert(gameObject4));
-        assert (root.insert(gameObject5));
-        assert (root.insert(gameObject6));
+        root.insert(gameObject1);
+        root.insert(gameObject2);
+        root.insert(gameObject3);
+        root.insert(gameObject4);
+        root.insert(gameObject5);
+        root.insert(gameObject6);
 
-        topLeft = new Point(0, 2);
-        rect = new BoundingRect(topLeft, 8, 2);
+        topLeft = new Point(0, 1);
+        rect = new BoundingRect(topLeft, 4, 3);
 
         ArrayList<GameObject> gameObjects = root.getGameObjects(rect);
 
         print(gameObjects);
 
-        topLeft = new Point(2, 1);
-        rect = new BoundingRect(topLeft, 6, 8);
+        topLeft = new Point(5, 8);
+        rect = new BoundingRect(topLeft, 1, 1);
 
         gameObjects = root.getGameObjects(rect);
 
         print(gameObjects);
 
-        topLeft = new Point(2, 4);
-        rect = new BoundingRect(topLeft, 3, 3);
+        topLeft = new Point(6, 3);
+        rect = new BoundingRect(topLeft, 3, 1);
 
         gameObjects = root.getGameObjects(rect);
 
