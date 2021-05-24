@@ -72,10 +72,6 @@ public class Program {
         int i = (left - 1);
 
         for (int j = left; j < right; ++j) {
-            if (books[j] == null || pivot == null) {
-                var x = 10;
-            }
-
             if (books[j].getID() < pivot.getID()) {
                 ++i;
                 swap(books, i, j);
