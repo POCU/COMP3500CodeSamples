@@ -1,7 +1,6 @@
 package academy.pocu.comp3500samples.w11.topologicalsort;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -32,9 +31,13 @@ public class Program {
         LinkedList<Course> sortedList = new LinkedList<>();
 
         for (Course course : courses) {
-            if (!discovered.contains(course)) {
-                topologicalSortRecursive(course, discovered, sortedList);
+            if (discovered.contains(course)) {
+                continue;
             }
+
+            topologicalSortRecursive(course,
+                    discovered,
+                    sortedList);
         }
 
         return sortedList;
@@ -44,9 +47,13 @@ public class Program {
         discovered.add(course);
 
         for (Course dependant : course.getDependants()) {
-            if (!discovered.contains(dependant)) {
-                topologicalSortRecursive(dependant, discovered, linkedList);
+            if (discovered.contains(dependant)) {
+                continue;
             }
+
+            topologicalSortRecursive(dependant,
+                    discovered,
+                    linkedList);
         }
 
         linkedList.addFirst(course);
