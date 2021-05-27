@@ -46,12 +46,12 @@ public class Program {
     private static void topologicalSortRecursive(Course course, HashSet<Course> discovered, LinkedList<Course> linkedList) {
         discovered.add(course);
 
-        for (Course dependant : course.getDependants()) {
-            if (discovered.contains(dependant)) {
+        for (Course nextCourse : course.getNextCourses()) {
+            if (discovered.contains(nextCourse)) {
                 continue;
             }
 
-            topologicalSortRecursive(dependant,
+            topologicalSortRecursive(nextCourse,
                     discovered,
                     linkedList);
         }
@@ -74,33 +74,33 @@ public class Program {
         final Course comp4000 = new Course("4000: Operating Systems (C)");
         final Course comp4100 = new Course("4100: Data Comm (C or C++");
 
-        comp0000.getDependants().add(comp1500);
+        comp0000.addNext(comp1500);
 
-        comp1500.getDependants().add(comp1000);
-        comp1500.getDependants().add(comp1600);
-        comp1500.getDependants().add(comp2200);
-        comp1500.getDependants().add(comp2500);
+        comp1500.addNext(comp1000);
+        comp1500.addNext(comp1600);
+        comp1500.addNext(comp2200);
+        comp1500.addNext(comp2500);
 
-        comp1000.getDependants().add(comp1600);
-        comp1000.getDependants().add(comp2200);
-        comp1000.getDependants().add(comp2500);
+        comp1000.addNext(comp1600);
+        comp1000.addNext(comp2200);
+        comp1000.addNext(comp2500);
 
-        comp1600.getDependants().add(comp4700);
+        comp1600.addNext(comp4700);
 
-        comp2200.getDependants().add(comp2300);
-        comp2200.getDependants().add(comp3200);
-        comp2200.getDependants().add(comp3000);
+        comp2200.addNext(comp2300);
+        comp2200.addNext(comp3200);
+        comp2200.addNext(comp3000);
 
-        comp2500.getDependants().add(comp4700);
-        comp2500.getDependants().add(comp3200);
-        comp2500.getDependants().add(comp3500);
+        comp2500.addNext(comp4700);
+        comp2500.addNext(comp3200);
+        comp2500.addNext(comp3500);
 
-        comp2300.getDependants().add(comp3000);
+        comp2300.addNext(comp3000);
 
-        comp3200.getDependants().add(comp4000);
-        comp3200.getDependants().add(comp4100);
+        comp3200.addNext(comp4000);
+        comp3200.addNext(comp4100);
 
-        comp3000.getDependants().add(comp4000);
+        comp3000.addNext(comp4000);
 
         ArrayList<Course> courses = new ArrayList<>();
 
