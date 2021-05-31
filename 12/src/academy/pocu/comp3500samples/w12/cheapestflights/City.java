@@ -20,8 +20,8 @@ public final class City {
         return Collections.unmodifiableMap(this.flights);
     }
 
-    public int addFlight(final String to, final int price) {
-        return this.flights.put(to, price);
+    public void addFlight(final String to, final int price) {
+        this.flights.put(to, price);
     }
 
     public int getPrice(final String to) {

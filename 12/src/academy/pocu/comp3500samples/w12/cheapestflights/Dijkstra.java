@@ -1,6 +1,5 @@
 package academy.pocu.comp3500samples.w12.cheapestflights;
 
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,37 +19,46 @@ public class Dijkstra {
             final String name = city.getName();
 
             citiesMap.put(name, city);
-            minPrices.put(name, Integer.MAX_VALUE);
+            minPrices.put(name,
+                    Integer.MAX_VALUE);
         }
 
         minPrices.put(from, 0);
         outPrevious.put(from, null);
 
-        PriorityQueue<AbstractMap.SimpleEntry<String, Integer>> candidates = new PriorityQueue<>(Map.Entry.comparingByValue());
+        PriorityQueue<CityNamePricePair> candidates = new PriorityQueue<>();
 
-        candidates.add(new AbstractMap.SimpleEntry<>(from, 0));
+        CityNamePricePair startCity = new CityNamePricePair(from, 0);
+
+        candidates.add(startCity);
 
         while (!candidates.isEmpty()) {
-            AbstractMap.SimpleEntry<String, Integer> current = candidates.remove();
-            final String currentCity = current
-                    .getKey();
-            final int currentPrice = current
-                    .getValue();
+            CityNamePricePair candidate = candidates.poll();
+
+            final String cityName = candidate
+                    .getCityName();
+
+            final int price = candidate
+                    .getPrice();
 
             final int minPrice = minPrices
-                    .get(currentCity);
+                    .get(cityName);
 
-            if (minPrice < currentPrice) {
+            if (minPrice < price) {
                 continue;
             }
 
             final City city = citiesMap
-                    .get(currentCity);
+                    .get(cityName);
+
             final Map<String, Integer> flights = city.getFlights();
 
             for (Map.Entry<String, Integer> entry : flights.entrySet()) {
-                String nextCity = entry.getKey();
-                final int nextPrice = entry.getValue();
+                final String nextCity = entry
+                        .getKey();
+
+                final int nextPrice = entry
+                        .getValue();
 
                 final int nextMinPrice = minPrices
                         .get(nextCity);
@@ -60,11 +68,11 @@ public class Dijkstra {
                 if (newPrice < nextMinPrice) {
                     minPrices.put(nextCity, newPrice);
 
-                    final AbstractMap.SimpleEntry<String, Integer> newEntry = new AbstractMap.SimpleEntry<>(nextCity, newPrice);
+                    final CityNamePricePair newEntry = new CityNamePricePair(nextCity, newPrice);
 
                     candidates.add(newEntry);
 
-                    outPrevious.put(nextCity, currentCity);
+                    outPrevious.put(nextCity, cityName);
                 }
             }
         }
