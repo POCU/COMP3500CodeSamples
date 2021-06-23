@@ -17,11 +17,12 @@ public final class Node {
     }
 
     public Map<Node, Integer> getRoads() {
-        return Collections.unmodifiableMap(this.roads);
+        return this.roads;
     }
 
-    public void addRoad(final Node to, final int distance) {
-        this.roads.put(to, distance);
+    public void addRoad(final Node to,
+                        final int dist) {
+        this.roads.put(to, dist);
     }
 
     public int getDistance(final Node to) {

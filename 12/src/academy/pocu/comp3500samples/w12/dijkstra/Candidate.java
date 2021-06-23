@@ -1,10 +1,10 @@
 package academy.pocu.comp3500samples.w12.dijkstra;
 
-public final class NodeDistance implements Comparable<NodeDistance> {
+public final class Candidate implements Comparable<Candidate> {
     private final Node node;
     private final int distance;
 
-    public NodeDistance(final Node node, final int distance) {
+    public Candidate(final Node node, final int distance) {
         this.node = node;
         this.distance = distance;
     }
@@ -18,7 +18,7 @@ public final class NodeDistance implements Comparable<NodeDistance> {
     }
 
     @Override
-    public int compareTo(NodeDistance o) {
+    public int compareTo(Candidate o) {
         return this.getDistance() - o.distance;
     }
 }

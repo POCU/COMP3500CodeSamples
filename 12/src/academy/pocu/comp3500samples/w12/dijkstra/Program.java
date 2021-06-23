@@ -5,34 +5,33 @@ import java.util.LinkedList;
 
 public class Program {
     public static void main(String[] args) {
-        final HashMap<String, Node> nodes = createNodes();
+        HashMap<String, Node> nodes = createNodes();
 
-        final HashMap<String, String> previous = new HashMap<>();
+        HashMap<String, String> previous = new HashMap<>();
 
-        HashMap<String, Integer> shortestDistances = Dijkstra.calculateShortestDistances(nodes, "Home", previous);
+        HashMap<String, Integer> minDists = Dijkstra.run(nodes, "Home", previous);
 
-        System.out.println(shortestDistances
-                .get("School"));
+        int schoolDist = minDists.get("School");
+        System.out.println(schoolDist);
 
-        System.out.println(shortestDistances
-                .get("Bank"));
+        int bankDist = minDists.get("Bank");
+        System.out.println(bankDist);
 
-        System.out.println(shortestDistances
-                .get("Library"));
-
-        String destination = "School";
+        int libDists = minDists.get("Library");
+        System.out.println(libDists);
 
         LinkedList<String> path = new LinkedList<>();
 
-        while (destination != null) {
-            path.addFirst(destination);
-            destination = previous
-                    .get(destination);
+        String name = "School";
+        while (name != null) {
+            path.addFirst(name);
+            name = previous.get(name);
         }
 
-        final String pathAsString = String.join(" -> ", path);
+        String pathString = String.join(" -> ",
+                path);
 
-        System.out.println(pathAsString);
+        System.out.println(pathString);
     }
 
     private static HashMap<String, Node> createNodes() {

@@ -8,77 +8,66 @@ public class Dijkstra {
     private Dijkstra() {
     }
 
-    public static HashMap<String, Integer> calculateShortestDistances(final HashMap<String, Node> nodes, final String from, final HashMap<String, String> outPrevious) {
-        final HashMap<String, Integer> shortestDistances = new HashMap<>();
+    public static HashMap<String, Integer> run(final HashMap<String, Node> nodes, final String from, final HashMap<String, String> outPrev) {
+        HashMap<String, Integer> minDists = new HashMap<>();
 
-        for (Map.Entry<String, Node> entry : nodes.entrySet()) {
-            final String name = entry.getKey();
+        final int INF = Integer.MAX_VALUE;
+        for (var entry : nodes.entrySet()) {
+            String name = entry.getKey();
 
-            shortestDistances.put(name,
-                    Integer.MAX_VALUE);
+            minDists.put(name, INF);
         }
 
-        shortestDistances.put(from, 0);
+        minDists.put(from, 0);
 
-        Node startingNode = nodes.get(from);
+        outPrev.put(from, null);
 
-        outPrevious.put(startingNode.getName(),
-                null);
+        PriorityQueue<Candidate> candidates = new PriorityQueue<>();
 
-        final PriorityQueue<NodeDistance> candidates = new PriorityQueue<>();
+        Node s = nodes.get(from);
+        Candidate candidate = new Candidate(s, 0);
 
-        final NodeDistance nodeDistance = new NodeDistance(startingNode, 0);
-
-        candidates.add(nodeDistance);
+        candidates.add(candidate);
 
         while (!candidates.isEmpty()) {
-            NodeDistance candidate = candidates.poll();
+            candidate = candidates.poll();
 
-            final Node node = candidate
-                    .getNode();
+            Node n = candidate.getNode();
+            String nodeName = n.getName();
 
-            final int distance = candidate
-                    .getDistance();
+            int minDist = minDists.get(nodeName);
+            int dist = candidate.getDistance();
 
-            final int shortestDistance = shortestDistances.get(node.getName());
-
-            if (shortestDistance < distance) {
+            if (minDist < dist) {
                 continue;
             }
 
-            final Map<Node, Integer> roads = node.getRoads();
+            Map<Node, Integer> roads = n
+                    .getRoads();
 
-            for (Map.Entry<Node, Integer> entry
-                    : roads.entrySet()) {
-                final Node next = entry
-                        .getKey();
+            for (var e : roads.entrySet()) {
+                Node next = e.getKey();
 
-                final int distanceToNext = entry
-                        .getValue();
+                int weight = e.getValue();
+                int newDist = minDist + weight;
 
-                final int newDistance = shortestDistance + distanceToNext;
+                String nextName = next.getName();
+                int nextMinDist = minDists
+                        .get(nextName);
 
-                final int shortestDistanceToNext = shortestDistances
-                        .get(next.getName());
-
-                if (newDistance >= shortestDistanceToNext) {
+                if (newDist >= nextMinDist) {
                     continue;
                 }
 
-                shortestDistances
-                        .put(next.getName(),
-                                newDistance);
+                minDists.put(nextName, newDist);
+                outPrev.put(nextName, nodeName);
 
-                outPrevious
-                        .put(next.getName(),
-                                node.getName());
-
-                final NodeDistance newCandidate = new NodeDistance(next, newDistance);
+                Candidate newCandidate = new Candidate(next, newDist);
 
                 candidates.add(newCandidate);
             }
         }
 
-        return shortestDistances;
+        return minDists;
     }
 }
