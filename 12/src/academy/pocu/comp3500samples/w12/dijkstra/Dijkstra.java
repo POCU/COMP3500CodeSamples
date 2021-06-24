@@ -22,15 +22,15 @@ public class Dijkstra {
 
         outPrev.put(from, null);
 
-        PriorityQueue<Candidate> candidates = new PriorityQueue<>();
+        PriorityQueue<Candidate> open = new PriorityQueue<>();
 
         Node s = nodes.get(from);
         Candidate candidate = new Candidate(s, 0);
 
-        candidates.add(candidate);
+        open.add(candidate);
 
-        while (!candidates.isEmpty()) {
-            candidate = candidates.poll();
+        while (!open.isEmpty()) {
+            candidate = open.poll();
 
             Node n = candidate.getNode();
             String nodeName = n.getName();
@@ -64,7 +64,7 @@ public class Dijkstra {
 
                 Candidate newCandidate = new Candidate(next, newDist);
 
-                candidates.add(newCandidate);
+                open.add(newCandidate);
             }
         }
 
