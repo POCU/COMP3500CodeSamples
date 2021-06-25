@@ -1,24 +1,24 @@
 package academy.pocu.comp3500samples.w13.kruskal;
 
 public final class Edge implements Comparable<Edge> {
-    private final String start;
-    private final String end;
+    private final String node1;
+    private final String node2;
     private final int weight;
 
-    public Edge(final String start,
-                final String end,
+    public Edge(final String node1,
+                final String node2,
                 final int weight) {
-        this.start = start;
-        this.end = end;
+        this.node1 = node1;
+        this.node2 = node2;
         this.weight = weight;
     }
 
-    public String getStart() {
-        return this.start;
+    public String getNode1() {
+        return this.node1;
     }
 
-    public String getEnd() {
-        return this.end;
+    public String getNode2() {
+        return this.node2;
     }
 
     public int getWeight() {
