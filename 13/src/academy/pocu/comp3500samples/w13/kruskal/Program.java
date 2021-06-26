@@ -5,28 +5,28 @@ import java.util.ArrayList;
 public class Program {
     public static void main(String[] args) {
         String[] nodes = new String[]{
-                "A",
-                "B",
-                "C",
-                "D",
-                "E",
-                "F",
-                "G",
-                "H"
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7"
         };
 
         Edge[] edges = new Edge[]{
-                new Edge("A", "E", 9),
-                new Edge("A", "F", 2),
-                new Edge("A", "C", 2),
-                new Edge("B", "E", 6),
-                new Edge("B", "F", 10),
-                new Edge("C", "F", 1),
-                new Edge("C", "H", 11),
-                new Edge("C", "D", 5),
-                new Edge("F", "H", 8),
-                new Edge("F", "E", 3),
-                new Edge("G", "H", 13)
+                new Edge("0", "4", 9),
+                new Edge("0", "5", 2),
+                new Edge("0", "2", 2),
+                new Edge("1", "4", 6),
+                new Edge("1", "5", 10),
+                new Edge("2", "5", 1),
+                new Edge("2", "7", 11),
+                new Edge("2", "3", 5),
+                new Edge("5", "7", 8),
+                new Edge("5", "4", 3),
+                new Edge("6", "7", 13)
         };
 
         ArrayList<Edge> mst = Kruskal
