@@ -10,7 +10,7 @@ public final class Kruskal {
     public static ArrayList<Edge> run(final String[] nodes, final Edge[] edges) {
         DisjointSet set = new DisjointSet(nodes);
 
-        ArrayList<Edge> ret = new ArrayList<>(edges.length);
+        ArrayList<Edge> mst = new ArrayList<>(edges.length);
 
         Arrays.sort(edges);
 
@@ -22,11 +22,11 @@ public final class Kruskal {
             String root2 = set.find(n2);
 
             if (!root1.equals(root2)) {
-                ret.add(edges[i]);
+                mst.add(edges[i]);
                 set.union(n1, n2);
             }
         }
 
-        return ret;
+        return mst;
     }
 }
