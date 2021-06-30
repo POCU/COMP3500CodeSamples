@@ -7,9 +7,9 @@ public class Program {
     public static void main(String[] args) {
         HashMap<String, Node> nodes = createNodes();
 
-        HashMap<String, String> previous = new HashMap<>();
+        HashMap<String, String> prevs = new HashMap<>();
 
-        HashMap<String, Integer> minDists = Dijkstra.run(nodes, "Home", previous);
+        HashMap<String, Integer> minDists = Dijkstra.run(nodes, "Home", prevs);
 
         int schoolDist = minDists.get("School");
         System.out.println(schoolDist);
@@ -25,7 +25,7 @@ public class Program {
         String name = "School";
         while (name != null) {
             path.addFirst(name);
-            name = previous.get(name);
+            name = prevs.get(name);
         }
 
         String pathString = String.join(" -> ",

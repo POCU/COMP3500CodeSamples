@@ -8,7 +8,7 @@ public class Dijkstra {
     private Dijkstra() {
     }
 
-    public static HashMap<String, Integer> run(final HashMap<String, Node> nodes, final String from, final HashMap<String, String> outPrev) {
+    public static HashMap<String, Integer> run(final HashMap<String, Node> nodes, final String from, final HashMap<String, String> prevs) {
         HashMap<String, Integer> minDists = new HashMap<>();
 
         final int INF = Integer.MAX_VALUE;
@@ -20,7 +20,7 @@ public class Dijkstra {
 
         minDists.put(from, 0);
 
-        outPrev.put(from, null);
+        prevs.put(from, null);
 
         PriorityQueue<Candidate> open = new PriorityQueue<>();
 
@@ -60,7 +60,7 @@ public class Dijkstra {
                 }
 
                 minDists.put(nextName, newDist);
-                outPrev.put(nextName, nodeName);
+                prevs.put(nextName, nodeName);
 
                 Candidate newCandidate = new Candidate(next, newDist);
 
