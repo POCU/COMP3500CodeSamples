@@ -19,6 +19,6 @@ public final class Candidate implements Comparable<Candidate> {
 
     @Override
     public int compareTo(Candidate o) {
-        return this.getDistance() - o.distance;
+        return this.distance - o.distance;
     }
 }
