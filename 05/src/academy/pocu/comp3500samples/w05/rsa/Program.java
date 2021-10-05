@@ -83,7 +83,7 @@ public class Program {
         }
     }
 
-    private static String decryptWithPublicKey(String encryptedMessage, PublicKey privateKey) {
+    private static String decryptWithPublicKey(String encryptedMessage, PublicKey publicKey) {
         try {
             byte[] bytes = Base64.getDecoder().decode(encryptedMessage);
 
