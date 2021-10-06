@@ -83,12 +83,12 @@ public class Program {
         }
     }
 
-    private static String decryptWithPublicKey(String encryptedMessage, PublicKey privateKey) {
+    private static String decryptWithPublicKey(String encryptedMessage, PublicKey publicKey) {
         try {
             byte[] bytes = Base64.getDecoder().decode(encryptedMessage);
 
             Cipher cipher = Cipher.getInstance("RSA");
-            cipher.init(Cipher.DECRYPT_MODE, privateKey);
+            cipher.init(Cipher.DECRYPT_MODE, publicKey);
 
             byte[] plaintext = cipher.doFinal(bytes);
 
