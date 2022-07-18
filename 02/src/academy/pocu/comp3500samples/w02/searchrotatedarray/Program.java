@@ -33,7 +33,7 @@ public class Program {
             return mid;
         }
 
-        if (numbers[start] <= numbers[mid]) {
+        if (numbers[start] < numbers[mid]) {
             if (num >= numbers[start] && num <= numbers[mid]) {
                 return indexOfRotatedArray(numbers, start, mid - 1, num);
             }
