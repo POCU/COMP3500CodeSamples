@@ -28,20 +28,19 @@ public class Program {
         }
 
         int mid = (start + end) / 2;
-
         if (numbers[mid] == num) {
             return mid;
         }
 
         if (numbers[start] <= numbers[mid]) {
-            if (num >= numbers[start] && num <= numbers[mid]) {
+            if (numbers[start] <= num && num <= numbers[mid]) {
                 return indexOfRotatedArray(numbers, start, mid - 1, num);
             }
 
             return indexOfRotatedArray(numbers, mid + 1, end, num);
         }
 
-        if (num >= numbers[mid] && num <= numbers[end]) {
+        if (numbers[mid] <= num && num <= numbers[end]) {
             return indexOfRotatedArray(numbers, mid + 1, end, num);
         }
 
